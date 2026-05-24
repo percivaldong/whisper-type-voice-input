@@ -1,0 +1,22 @@
+# Python 虚拟环境
+.venv/
+
+# Whisper 模型文件（首次运行自动下载）
+models/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 临时文件
+*.wav
+*.tmp
+
+# IDE
+.vscode/
+.idea/
+
+# 系统文件
+Thumbs.db
+Desktop.ini

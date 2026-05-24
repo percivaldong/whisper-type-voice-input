@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mv \"D:\\\\whisper-type（语音输入）\" \"D:\\\\Projects\\\\whisper-type（语音输入）\")",
+      "Bash(cmd /c \"move \"D:\\\\whisper-type（语音输入）\" \"D:\\\\Projects\\\\whisper-type（语音输入）\"\")",
+      "Bash(powershell -Command \"Move-Item -Path 'D:\\\\whisper-type（语音输入）' -Destination 'D:\\\\Projects\\\\whisper-type（语音输入）' -Force\")",
+      "Bash(robocopy \"D:\\\\whisper-type（语音输入）\" \"D:\\\\Projects\\\\whisper-type（语音输入）\" /E /COPYALL /R:3 /W:3)",
+      "Bash(cmd /c \"robocopy \"D:\\\\whisper-type（语音输入）\" \"D:\\\\Projects\\\\whisper-type（语音输入）\" /E /COPYALL /R:3 /W:3\")",
+      "Bash(powershell -ExecutionPolicy Bypass -File \"D:\\\\Projects\\\\_move_whisper.ps1\")",
+      "Bash(python -c ' *)",
+      "Bash(.venv/Scripts/python -m pip freeze)",
+      "Bash(git init *)"
+    ],
+    "additionalDirectories": [
+      "D:\\Projects"
+    ]
+  }
+}
