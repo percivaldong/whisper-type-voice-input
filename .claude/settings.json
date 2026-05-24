@@ -9,7 +9,19 @@
       "Bash(powershell -ExecutionPolicy Bypass -File \"D:\\\\Projects\\\\_move_whisper.ps1\")",
       "Bash(python -c ' *)",
       "Bash(.venv/Scripts/python -m pip freeze)",
-      "Bash(git init *)"
+      "Bash(git init *)",
+      "Bash(cd /d)",
+      "Bash(mv \"whisper-type-voice-input\" \"whisper-type-voice-input \\(本地语音转文字工具\\)\")",
+      "Bash(cd /tmp)",
+      "Bash(mv /d/whisper-type-voice-input /d/\"whisper-type-voice-input \\(本地语音转文字工具\\)\")",
+      "Bash(cmd.exe /c 'ren \"d:\\\\whisper-type-voice-input\" \"whisper-type-voice-input \\(本地语音转文字工具\\)\"')",
+      "Bash(powershell.exe -Command \"Rename-Item -Path 'd:\\\\whisper-type-voice-input' -NewName 'whisper-type-voice-input \\(本地语音转文字工具\\)'\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://hf-mirror.com\" --connect-timeout 10)",
+      "Bash(\".venv/Scripts/python.exe\" -c \"import huggingface_hub; print\\(huggingface_hub.__version__\\)\")",
+      "Bash(\".venv/Scripts/pip.exe\" list *)",
+      "Bash(uv pip *)",
+      "Bash('d:/whisper-type-voice-input \\(本地语音转文字工具\\)/.venv/Scripts/python.exe' -c ' *)",
+      "Bash(git add *)"
     ],
     "additionalDirectories": [
       "D:\\Projects"

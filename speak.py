@@ -20,7 +20,56 @@ import zhconv
 
 
 MODEL_SIZE = "small"
+MODEL_REPO = "Systran/faster-whisper-small"
+MODEL_LOCAL = PROJECT_DIR / "models" / "Systran" / "faster-whisper-small"
 LANGUAGE = "zh"
+
+
+def _try_download_hf(endpoint=None):
+    """通过 HuggingFace 下载，可选镜像端点。"""
+    if endpoint:
+        os.environ["HF_ENDPOINT"] = endpoint
+        safe_print(f"[whisper-type] 尝试 HuggingFace 镜像 ({endpoint}) ...")
+    else:
+        safe_print("[whisper-type] 尝试 HuggingFace 官方源 ...")
+
+    from huggingface_hub import snapshot_download
+
+    return snapshot_download(MODEL_REPO, cache_dir=str(PROJECT_DIR / "models"))
+
+
+def _try_download_modelscope():
+    """通过 ModelScope 下载。"""
+    safe_print("[whisper-type] 尝试 ModelScope 下载 ...")
+    from modelscope import snapshot_download
+
+    return snapshot_download(MODEL_REPO, cache_dir=str(PROJECT_DIR / "models"))
+
+
+def ensure_model():
+    """确保模型已下载到本地。自动检测网络并选择可用下载源。"""
+    if MODEL_LOCAL.exists() and list(MODEL_LOCAL.iterdir()):
+        return str(MODEL_LOCAL)
+
+    safe_print(f"[whisper-type] 模型未缓存，开始下载 ({MODEL_SIZE}, ~460MB) ...")
+
+    for attempt in [
+        lambda: _try_download_hf(),                         # HF 官方源
+        lambda: _try_download_hf("https://hf-mirror.com"),  # HF 国内镜像
+        _try_download_modelscope,                            # ModelScope
+    ]:
+        try:
+            model_dir = attempt()
+            safe_print("[whisper-type] 模型下载完成")
+            return model_dir
+        except Exception as e:
+            safe_print(f"[whisper-type] 失败 ({type(e).__name__}), 切换下一源...")
+
+    raise RuntimeError(
+        "无法下载语音识别模型，请检查网络连接。\n"
+        "可手动下载模型到: " + str(MODEL_LOCAL)
+    )
+
 TRIGGER_KEY = Key.ctrl_r
 SAMPLE_RATE = 16000
 CHANNELS = 1
@@ -37,8 +86,9 @@ def safe_print(*args, **kwargs):
 
 
 def load_model():
+    model_path = ensure_model()
     safe_print(f"[whisper-type] 加载 Whisper 模型 ({MODEL_SIZE})...")
-    model = WhisperModel(MODEL_SIZE, device="cpu", compute_type="int8")
+    model = WhisperModel(model_path, device="cpu", compute_type="int8")
     safe_print("[whisper-type] 模型就绪，按住右 Ctrl 开始说话")
     return model
 
